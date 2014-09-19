@@ -1,0 +1,57 @@
+// (ctrl shift s)
+
+
+// Initialize cursor
+var x_position = 0
+var y_position = 0
+var row_height = 0
+
+for (var i = 0; i < ([selection count]); i++) {
+	
+	var current_artboard = selection[i]
+
+	// Check if this is the end of the row
+	if (current_artboard.name().indexOf("+") > -1) {
+				
+		// Reset y position to bottom of previous row
+		if (i == 0) {
+			first_arboard = selection[0]
+			reset_x_position = [[first_arboard absoluteRect] rulerX]
+
+			x_position = reset_x_position
+			y_position = [[first_arboard absoluteRect] rulerY]
+		} else {
+			x_position = 0
+			y_position = y_position + row_height + 1000
+		}
+
+		// Move the artboard to a new row
+		[[current_artboard absoluteRect] setRulerX: x_position)]
+		[[current_artboard absoluteRect] setRulerY: y_position)]
+
+		// Reset row height for next set of arboards
+		row_height = [[current_artboard frame] height]
+
+	} else {
+
+		log(y_position)
+		log(row_height)
+		
+		// Check if this artboard is taller than the tallest one in the group 
+		if ([[current_artboard frame] height] > row_height) {
+			// Set row height to new tallest arboard height
+			row_height = [[current_artboard frame] height]
+		}
+
+		var previous_artboard = selection[i - 1]
+		var previous_artboard_x = [[previous_artboard absoluteRect] rulerX]
+		var previous_artboard_width = [[previous_artboard frame] width]]
+		
+		// Find the new X value
+		var x_position = [[previous_artboard absoluteRect] rulerX] + [[previous_artboard frame] width] + 400]
+		
+		// Position the artboard
+		[[current_artboard absoluteRect] setRulerX: x_position)]
+		[[current_artboard absoluteRect] setRulerY: y_position)]
+	}
+}
